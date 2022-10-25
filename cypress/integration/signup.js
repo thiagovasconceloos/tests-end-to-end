@@ -1,17 +1,17 @@
 describe('cadastro', () => {
 
+   const dados = {
+      name: 'Thiago Vasconcelos',
+      email: 'thiago@samuraibs.com',
+      password: 'pwd123',
+      is_provider: true
+   }
 
    it('deve cadastrar um novo usuario', () => {
 
 
 
-      const dados = {
-         name: 'Thiago Vasconcelos',
-         email: 'thiago@samuraibs.com',
-         password: 'pwd123'
 
-
-      }
       cy.task('removeUser', dados.email)
          .then((result) => {
             console.log(result)
@@ -32,7 +32,7 @@ describe('cadastro', () => {
       cy.get('.toast')
          .should('be.visible')
          .find('p')
-         .should('have.text', 'Agora você pode fazer seu login no Samurai Barbershop!')
+         .should('have.text', 'Agora você se tornou um(a) Samurai, faça seu login para ver seus agendamentos!')
 
 
 
@@ -42,17 +42,26 @@ describe('cadastro', () => {
 
 
 
-   it('deve exibir e-mail ja cadastrado', () => {
+   it.only('deve exibir e-mail ja cadastrado', () => {
+
+      cy.task('removeUser', dados.email)
+         .then((result) => {
+            console.log(result)
+
+         })
 
 
+      cy.request(
 
-      const dados = {
-         name: 'Thiago Vasconcelos',
-         email: 'thiago@samuraibs.com',
-         password: 'pwd123'
+         'POST',
+         'http://localhost:3333/users',
+         dados
+      ).then((res) => {
 
+         expect(res.status).to.eq(200)
 
-      }
+      })
+
 
 
       cy.visit('/signup')
