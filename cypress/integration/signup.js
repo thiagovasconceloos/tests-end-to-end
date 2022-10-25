@@ -1,12 +1,10 @@
-import { faker } from '@faker-js/faker'
-
 it('deve cadastrar um novo usuario',()=>{
  
    
 
   const dados = {
      name : 'Thiago Vasconcelos',
-     email: faker.internet.email(),
+     email: 'thiago@samuraibs.com',
      password: 'pwd123'
 
 
@@ -19,7 +17,16 @@ it('deve cadastrar um novo usuario',()=>{
     cy.get('input[placeholder="E-mail"]').type(dados.email)
     cy.get('input[placeholder="Senha"]').type(dados.password)
 
+    cy.intercept('POST','/users',{
+
+      statusCode: 200
+       
+    }).as('postUser')
+
+
     cy.contains('button','Cadastrar').click()
+
+    cy.wait('@postUser')
 
     cy.get('.toast')
     .should('be.visible')
