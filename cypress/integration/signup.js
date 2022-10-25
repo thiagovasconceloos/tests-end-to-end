@@ -9,7 +9,11 @@ it('deve cadastrar um novo usuario',()=>{
 
 
   }
-   
+   cy.task('removeUser',dados.email)
+   .then((result)=>{
+    console.log(result)
+       
+   })
 
     cy.visit('/signup')
 
@@ -17,16 +21,16 @@ it('deve cadastrar um novo usuario',()=>{
     cy.get('input[placeholder="E-mail"]').type(dados.email)
     cy.get('input[placeholder="Senha"]').type(dados.password)
 
-    cy.intercept('POST','/users',{
+    // cy.intercept('POST','/users',{
 
-      statusCode: 200
+    //   statusCode: 200
        
-    }).as('postUser')
+    // }).as('postUser')
 
 
     cy.contains('button','Cadastrar').click()
 
-    cy.wait('@postUser')
+   // cy.wait('@postUser')
 
     cy.get('.toast')
     .should('be.visible')

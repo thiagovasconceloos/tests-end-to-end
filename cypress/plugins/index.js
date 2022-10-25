@@ -12,11 +12,42 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
+const { Pool } = require('pg')
 /**
  * @type {Cypress.PluginConfig}
  */
 // eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
-}
+  
+   const pool = new Pool({
+
+      host: 'peanut.db.elephantsql.com',
+      user: 'ggsqensm',
+      password:'SmYg2OsTuZVupLQWvWDIuBy7D_GWhill',
+      database: 'ggsqensm',
+      port: 5432
+
+
+   })
+
+
+    on('task',{
+
+    removeUser(email){
+    return new Promise((resolve)=> {
+
+      pool.query('DELETE FROM public.users where email = $1',[email],(er,result)=>{
+         if(er){
+           throw er
+         }
+       resolve({sucess:result})
+      })
+    }) }   }) }
+   
+    
+  
+
+
+
+
+
