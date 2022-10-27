@@ -20,9 +20,9 @@ describe('cadastro', () => {
 
       cy.visit('/signup')
 
-      cy.get('input[placeholder="Nome"]').type(dados.name)
-      cy.get('input[placeholder="E-mail"]').type(dados.email)
-      cy.get('input[placeholder="Senha"]').type(dados.password)
+      cy.get('input[placeholder^="Nome"]').type(dados.name)
+      cy.get('input[placeholder$="email"]').type(dados.email)
+      cy.get('input[placeholder*="senha"]').type(dados.password)
 
 
       cy.contains('button', 'Cadastrar').click()
@@ -66,9 +66,9 @@ describe('cadastro', () => {
 
       cy.visit('/signup')
 
-      cy.get('input[placeholder="Nome"]').type(dados.name)
-      cy.get('input[placeholder="E-mail"]').type(dados.email)
-      cy.get('input[placeholder="Senha"]').type(dados.password)
+      cy.get('input[placeholder^="Nome"]').type(dados.name)
+      cy.get('input[placeholder$="email"]').type(dados.email)
+      cy.get('input[placeholder*="senha"]').type(dados.password)
 
 
 
