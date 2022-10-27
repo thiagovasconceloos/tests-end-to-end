@@ -1,6 +1,18 @@
 import {el} from './elements'
 
+import toast from '../../components/toast'
+
 class SignupPage {
+
+    constructor(){
+
+    this.toast = toast
+    
+    
+    }  
+    
+
+
 
     go() {
 
@@ -31,16 +43,6 @@ class SignupPage {
     }
 
 
-
-    toastHaveText(expectText) {
-
-        cy.get(el.toast)
-            .should('be.visible')
-            .find('p')
-            .should('have.text', expectText)
-
-
-    }
 
 }
 
