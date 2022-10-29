@@ -1,5 +1,5 @@
 import {el} from './elements'
-class loginPage{
+class LoginPage{
 
 
    go(){
@@ -23,8 +23,13 @@ class loginPage{
 
   }
 
+
+   
+
+   
+
 }
 
 
 
-export default new loginPage()
+export default new LoginPage()
