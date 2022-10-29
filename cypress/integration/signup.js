@@ -83,7 +83,7 @@ describe('cadastro', function () {
 
 
 
-    context.only('quando a senha tem 1 caracter', ()=>{
+    context('quando a senha tem 1 caracter', ()=>{
         const passwords = ['1','12','123','1234','12345']
 
        
@@ -115,6 +115,13 @@ describe('cadastro', function () {
         })
  
      }) 
+
+
+
+
+     
+
+
  
      }) 
 
@@ -122,7 +129,24 @@ describe('cadastro', function () {
 
 
 
+     context.only('quando não preencho nenhum dos campos', function(){
+        const alertMessages = [
+            'Nome é obrigatório',
+            'E-mail é obrigatório',
+            'Senha é obrigatória'
+        ]
 
+        before(()=>{
+            signupPage.go()
+            signupPage.submit()
+        })
+
+         alertMessages.forEach(function(alert){
+           it('deve exibir ' + alert.toLowerCase(), function(){
+                signupPage.alertHaveText(alert)
+            })
+     })
+    })
 
 
 
