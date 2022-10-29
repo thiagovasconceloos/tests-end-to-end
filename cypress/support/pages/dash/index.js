@@ -1,16 +1,13 @@
-class DashPage{
+import header from '../../components/header'
 
-   userLoggedIn(userName){
+class DashPage {
 
+    constructor() {
 
-    cy.get('header a strong',{timeout:7000})
-    .should('be.visible')
-    .should('have.text',userName)
-   }
+        this.header = header
 
-
+    }
 
 }
-
 
 export default new DashPage()
