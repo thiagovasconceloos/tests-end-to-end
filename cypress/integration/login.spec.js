@@ -1,5 +1,6 @@
 import loginPage from '../support/pages/login'
 import dashPage from '../support/pages/dash'
+import login from '../support/pages/login'
 
 
 
@@ -16,9 +17,9 @@ describe('login', () => {
     }
 
 
-    
+
     before(function () {
-       cy.postUser(user)
+      cy.postUser(user)
 
 
     })
@@ -44,7 +45,46 @@ describe('login', () => {
 
 
 
+  context.only('quando usuario é bom mas a senha é incorreta', () => {
+    let user = {
 
+      name: 'Celso Kumura',
+      email: 'kamura@samuraibs.com',
+      password: 'pwd123',
+      is_provider: true
+
+    }
+    before(() => {
+
+      cy.postUser(user).then(()=> {
+
+        user.password = 'abc123'
+
+      })     
+
+
+    })
+
+    it('deve notificar erro de credenciais', () => {
+
+         loginPage.go()
+         loginPage.form(user)
+         loginPage.submit()
+         cy.wait(5000)
+
+
+
+
+
+    })
+
+
+
+
+
+
+
+  })
 
 
 

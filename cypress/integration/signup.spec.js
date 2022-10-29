@@ -32,7 +32,7 @@ describe('cadastro', function () {
         before(function () {
 
 
-            cy.postUser(user)
+            cy.postUser(this.email_dup)
         })
 
         it('não deve cadastrar o usuário', function () {
@@ -114,7 +114,7 @@ describe('cadastro', function () {
 
 
 
-    context.only('quando não preencho nenhum dos campos', function () {
+    context('quando não preencho nenhum dos campos', function () {
         const alertMessages = [
             'Nome é obrigatório',
             'E-mail é obrigatório',
