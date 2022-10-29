@@ -70,7 +70,7 @@ describe('cadastro', function () {
         
         }
      
-      it.only('deve exibir uma mensagem de alerta', ()=>{ 
+      it('deve exibir uma mensagem de alerta', ()=>{ 
         signupPage.go()
         signupPage.form(user)
         signupPage.submit()
@@ -80,6 +80,45 @@ describe('cadastro', function () {
     }) 
 
     }) 
+
+
+
+    context.only('quando a senha tem 1 caracter', ()=>{
+        const passwords = ['1','12','123','1234','12345']
+
+       
+
+        beforeEach(()=>{
+            signupPage.go()
+        })
+
+
+        passwords.forEach((p)=>{
+       
+              
+       it('não deve cadastrar com a senha: '+p, ()=>{ 
+         const user =  {
+             name: 'Lia Vasconcelos',
+             email: 'vasconcelos@samuraibs.com',
+             password: p,
+         
+         }
+
+        signupPage.form(user)
+        signupPage.submit()
+
+
+        })
+
+       afterEach(()=>{ 
+         signupPage.alertHaveText('Pelo menos 6 caracteres')
+        })
+ 
+     }) 
+ 
+     }) 
+
+
 
 
 
