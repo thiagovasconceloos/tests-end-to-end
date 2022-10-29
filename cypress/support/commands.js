@@ -23,3 +23,27 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('postUser', (user) => {
+
+    cy.task('removeUser', user.email)
+        .then(function (result) {
+            console.log(result)
+        })
+
+    cy.request(
+
+        'POST',
+        'http://localhost:3333/users',
+        user
+    ).then((res) => {
+
+        expect(res.status).to.eq(200)
+
+    })
+
+
+
+
+
+})

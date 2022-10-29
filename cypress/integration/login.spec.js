@@ -8,25 +8,34 @@ describe('login', () => {
   context('quando o usuario é muito bom', () => {
 
     const user = {
-      name:'Jassa Vasconcelos',
+      name: 'Jassa Vasconcelos',
       email: 'jassa@samuraibs.com',
-      password: 'pwd123'
-
+      password: 'pwd123',
+      is_provider: true
 
     }
 
 
-    it('deve logar com sucesso', () => {
     
-        loginPage.go()
-        loginPage.form(user)
-        loginPage.submit()
-        dashPage.header.userLoggedIn(user.name)
+    before(function () {
+       cy.postUser(user)
 
 
     })
 
-    
+
+
+    it('deve logar com sucesso', () => {
+
+      loginPage.go()
+      loginPage.form(user)
+      loginPage.submit()
+      dashPage.header.userLoggedIn(user.name)
+
+
+    })
+
+
 
 
 

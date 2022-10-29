@@ -1,4 +1,5 @@
 import header from '../../components/header'
+import {el} from './elements'
 
 class DashPage {
 
