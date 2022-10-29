@@ -45,7 +45,7 @@ describe('login', () => {
 
 
 
-  context.only('quando usuario é bom mas a senha é incorreta', () => {
+  context('quando usuario é bom mas a senha é incorreta', () => {
     let user = {
 
       name: 'Celso Kumura',
@@ -84,7 +84,50 @@ describe('login', () => {
 
 
   })
+  
 
+  context.only('quando  o formato do e-mail  é invalido',()=>{
+
+       const emails = [
+       
+       'mail.com.br',
+       '@gmail.com',
+       'yahoo.com',
+       '@',
+       'thiago@',
+       '$%^^S**',
+       'xpto123'
+
+
+       ]
+        before(()=>{
+        
+          loginPage.go()
+
+        })
+
+       emails.forEach((e)=>{
+ 
+ 
+       it('não deve logar com o e-mail: '+ e, ()=>{
+
+          const user = { email: e , password:'pwd123'}
+         
+        
+          loginPage.form(user)
+          loginPage.submit()
+          loginPage.alertHaveText('Informe um email válido')
+
+       })
+
+
+
+
+
+       })
+
+
+  })
 
 
 })

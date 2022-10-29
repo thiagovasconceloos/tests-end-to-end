@@ -1,39 +1,52 @@
-import {el} from './elements'
+import { el } from './elements'
 import toast from '../../components/toast'
-class LoginPage{
- 
-   constructor(){
+class LoginPage {
 
-      this.toast = toast
-   }
+  constructor() {
 
-
-
-   go(){
-
-
-      cy.visit('/')
-   }
-
-   form(user){
-   
-    cy.get(el.email).type(user.email)
-    cy.get(el.password).type(user.password)
+    this.toast = toast
+  }
 
 
 
-   }
+  go() {
 
-  submit(){
+
+    cy.visit('/')
+  }
+
+  form(user) {
+
+    cy.get(el.email)
+      .clear()
+      .type(user.email)
+    cy.get(el.password)
+      .clear()
+      .type(user.password)
+
+
+
+  }
+
+  submit() {
 
     cy.contains(el.LoginButton).click()
 
   }
 
 
-   
+  alertHaveText(expectedText) {
 
-   
+    cy.contains(el.alertError, expectedText)
+      .should('be.visible')
+
+
+  }
+
+
+
+
+
 
 }
 
