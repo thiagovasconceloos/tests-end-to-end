@@ -70,8 +70,7 @@ describe('login', () => {
          loginPage.go()
          loginPage.form(user)
          loginPage.submit()
-         cy.wait(5000)
-
+         loginPage.toast.shouldHaveText('Ocorreu um erro ao fazer login, verifique suas credenciais.')
 
 
 
