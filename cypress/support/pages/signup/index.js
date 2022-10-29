@@ -43,7 +43,11 @@ class SignupPage {
     }
 
 
+     alertHaveText(expectedText) {
 
+     cy.contains('.alert-error',expectedText)
+     .should('be.visible')
+    }
 }
 
 

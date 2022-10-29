@@ -1,62 +1,94 @@
 import signupPage from '../support/pages/signup'
 
+describe('cadastro', function () {
 
-describe('cadastro', () => {
+    before(function(){
+        cy.fixture('signup').then(function(signup){
+            this.success = signup.success
+            this.email_dup = signup.email_dup
+            this.email_inv =  signup.email_inv
+            
+        })
+    })
 
-   const dados = {
-      name: 'Thiago Vasconcelos',
-      email: 'thiago@samuraibs.com',
-      password: 'pwd123',
-      is_provider: true
-   }
+    context('quando o usuário é novato', function () {
+        before(function () {
+            cy.task('removeUser', this.success.email)
+                .then(function (result) {
+                    console.log(result)
+                })
+        })
 
-   before(() => {
+        it('deve cadastrar com sucesso', function () {
+            signupPage.go()
+            signupPage.form(this.success)
+            signupPage.submit()
+            signupPage.toast.shouldHaveText('Agora você se tornou um(a) Samurai, faça seu login para ver seus agendamentos!')
+        })
+    }) 
 
 
-      cy.task('removeUser', dados.email)
-         .then((result) => {
+    context('quando o email já existe', function () {
+        before(function () {
+        
+        
+            cy.task('removeUser', this.email_dup.email)
+        .then(function (result) {
             console.log(result)
+        })
+           
+           
+            cy.request(
 
-         })
+                'POST',
+                'http://localhost:3333/users',
+                this.email_dup
+             ).then((res) => {
+       
+                expect(res.status).to.eq(200)
+       
+             })
+        })
 
+        it('não deve cadastrar o usuário', function () {
+            signupPage.go()
+            signupPage.form(this.email_dup)
+            signupPage.submit()
+            signupPage.toast.shouldHaveText('Email já cadastrado para outro usuário.')
+        })
 
-   })
-
-
-
-   it('deve cadastrar um novo usuario', () => {
-
-
-
-
-      signupPage.go()
-      signupPage.form(dados)
-      signupPage.submit()
-      signupPage.toast.shouldHaveText('Agora você se tornou um(a) Samurai, faça seu login para ver seus agendamentos!')
-
-
-   })
-
-
-
-   it.only('deve exibir e-mail ja cadastrado', () => {
-      cy.request(
-
-         'POST',
-         'http://localhost:3333/users',
-         dados
-      ).then((res) => {
-
-         expect(res.status).to.eq(200)
-
-      })
-
-      signupPage.go()
-      signupPage.form(dados)
-      signupPage.submit()
-      signupPage.toast.shouldHaveText('Email já cadastrado para outro usuário.')
+    })
 
 
-   })
+
+    context('quando o e-mail é incorreto', ()=>{
+
+       const user =  {
+            name: 'Maria Vasconcelos',
+            email: 'vasconcelos.samuraibs.com',
+            password: 'pwd123',
+        
+        }
+     
+      it.only('deve exibir uma mensagem de alerta', ()=>{ 
+        signupPage.go()
+        signupPage.form(user)
+        signupPage.submit()
+        signupPage.alertHaveText('Informe um email válido')
+
+
+    }) 
+
+    }) 
+
+
+
+
+
+
+
+
+
+
 
 })
