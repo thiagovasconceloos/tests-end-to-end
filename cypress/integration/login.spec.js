@@ -56,21 +56,21 @@ describe('login', () => {
     }
     before(() => {
 
-      cy.postUser(user).then(()=> {
+      cy.postUser(user).then(() => {
 
         user.password = 'abc123'
 
-      })     
+      })
 
 
     })
 
     it('deve notificar erro de credenciais', () => {
 
-         loginPage.go()
-         loginPage.form(user)
-         loginPage.submit()
-         loginPage.toast.shouldHaveText('Ocorreu um erro ao fazer login, verifique suas credenciais.')
+      loginPage.go()
+      loginPage.form(user)
+      loginPage.submit()
+      loginPage.toast.shouldHaveText('Ocorreu um erro ao fazer login, verifique suas credenciais.')
 
 
 
@@ -84,49 +84,68 @@ describe('login', () => {
 
 
   })
-  
-
-  context.only('quando  o formato do e-mail  é invalido',()=>{
-
-       const emails = [
-       
-       'mail.com.br',
-       '@gmail.com',
-       'yahoo.com',
-       '@',
-       'thiago@',
-       '$%^^S**',
-       'xpto123'
 
 
-       ]
-        before(()=>{
-        
-          loginPage.go()
+  context('quando  o formato do e-mail  é invalido', () => {
 
-        })
+    const emails = [
 
-       emails.forEach((e)=>{
- 
- 
-       it('não deve logar com o e-mail: '+ e, ()=>{
-
-          const user = { email: e , password:'pwd123'}
-         
-        
-          loginPage.form(user)
-          loginPage.submit()
-          loginPage.alertHaveText('Informe um email válido')
-
-       })
+      'mail.com.br',
+      '@gmail.com',
+      'yahoo.com',
+      '@',
+      'thiago@',
+      '$%^^S**',
+      'xpto123'
 
 
+    ]
+    before(() => {
+
+      loginPage.go()
+
+    })
+
+    emails.forEach((e) => {
+
+
+      it('não deve logar com o e-mail: ' + e, () => {
+
+        const user = { email: e, password: 'pwd123' }
+
+
+        loginPage.form(user)
+        loginPage.submit()
+        loginPage.alertHaveText('Informe um email válido')
+
+      })
 
 
 
-       })
 
 
+    })
+
+
+  })
+
+
+  context.only('quando não preencho nenhum dos campos', function () {
+    const alertMessages = [
+      'E-mail é obrigatório',
+      'Senha é obrigatória'
+    ]
+
+    before(() => {
+      loginPage.go()
+      loginPage.submit()
+    })
+
+    alertMessages.forEach(function (alert) {
+      it('deve exibir ' + alert.toLowerCase(), function () {
+        loginPage.alertHaveText(alert)
+      })
+    })
   })
 
 
