@@ -2,11 +2,12 @@ import signupPage from '../support/pages/signup'
 
 describe('cadastro', function () {
 
-    before(function () {
+    before( () => {
         cy.fixture('signup').then(function (signup) {
             this.success = signup.success
             this.email_dup = signup.email_dup
             this.email_inv = signup.email_inv
+            this.short_password = signup.short_password
 
         })
     })
@@ -46,21 +47,14 @@ describe('cadastro', function () {
 
 
 
-    context('quando o e-mail é incorreto', () => {
+    context('quando o e-mail é incorreto', function () {
 
-        const user = {
-            name: 'Maria Vasconcelos',
-            email: 'vasconcelos.samuraibs.com',
-            password: 'pwd123',
 
-        }
-
-        it('deve exibir uma mensagem de alerta', () => {
+        it('deve exibir uma mensagem de alerta', function ()  {
             signupPage.go()
-            signupPage.form(user)
+            signupPage.form(this.email_inv)
             signupPage.submit()
             signupPage.alert.haveText('Informe um email válido')
-
 
         })
 
@@ -68,7 +62,7 @@ describe('cadastro', function () {
 
 
 
-    context('quando a senha tem 1 caracter', () => {
+    context('quando a senha é muito curta', function () {
         const passwords = ['1', '12', '123', '1234', '12345']
 
 
@@ -81,15 +75,10 @@ describe('cadastro', function () {
         passwords.forEach((p) => {
 
 
-            it('não deve cadastrar com a senha: ' + p, () => {
-                const user = {
-                    name: 'Lia Vasconcelos',
-                    email: 'vasconcelos@samuraibs.com',
-                    password: p,
+            it('não deve cadastrar com a senha: ' + p, function () {
+                this.short_password.password= p
 
-                }
-
-                signupPage.form(user)
+                signupPage.form(this.short_password)
                 signupPage.submit()
 
 

@@ -24,11 +24,13 @@ class SignupPage {
 
 
 
-    form(dados) {
+    form(user) {
 
-        cy.get(el.name).type(dados.name)
-        cy.get(el.email).type(dados.email)
-        cy.get(el.password).type(dados.password)
+       
+            cy.get(el.name).type(user.name)
+            cy.get(el.email).type(user.email)
+            cy.get(el.password).type(user.password)
+       
 
 
     }

@@ -1,13 +1,24 @@
 {
-    "success": {
-      "name": "Thiago Vasconcelos",
-      "email": "thiago@samuraibs.com",
-      "password": "pwd123"
-    },
-    "email_dup": {
-      "name": "Thiago Vasconcelos",
-      "email": "vasconcelos@samuraibs.com",
-      "password": "pwd123",
-      "is_provider": true
-    }
+  "success": {
+    "name": "Thiago Vasconcelos",
+    "email": "thiago@samuraibs.com",
+    "password": "pwd123"
+  },
+  "email_dup": {
+    "name": "Thiago Vasconcelos",
+    "email": "vasconcelos@samuraibs.com",
+    "password": "pwd123",
+    "is_provider": true
+  },
+  "email_inv": {
+    "name": "Maria Vasconcelos",
+    "email": "vasconcelos.samuraibs.com",
+    "password": "pwd123"
+  },
+  
+  "short_password": {
+    "name": "Lia Vasconcelos",
+    "email": "vasconcelos@samuraibs.com",
+    "password": null
   }
+}
