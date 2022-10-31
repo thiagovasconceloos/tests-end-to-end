@@ -27,7 +27,7 @@ describe('resgate de senha', function () {
 
     })
 
-    context('quando o usuário solicita o resgate', function () {
+    context.only('quando o usuário solicita o resgate', function () {
 
         before(function () {
             cy.postUser(this.data)
@@ -35,8 +35,12 @@ describe('resgate de senha', function () {
         })
 
         it('deve pode cadastrar uma nova senha', function () {
-            const token = Cypress.env('reco veryToken')
-
+            const token = Cypress.env('recoveryToken')
+             rpPage.go(token)
+             rpPage.form('abc123','abc123')
+             rpPage.submit() 
+             const message = 'Agora você já pode logar com a sua nova senha secreta.'
+             rpPage.toast.shouldHaveText(message)
             
         })
     })
