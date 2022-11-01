@@ -1,4 +1,5 @@
 import moment from 'moment';
+import loginPage from '../support/pages/login'
 
 describe('dashboard', function () {
 
@@ -30,12 +31,16 @@ describe('dashboard', function () {
             cy.log('Conseguimos pegar o token' + Cypress.env('apiToken'))
 
             cy.setProviderId(data.provider.email)
+            cy.createAppointment()
         })
 
         it('o mesmo deve ser exibido no dashboard', function () {
 
 
-            cy.createAppointment()
+            loginPage.go()
+            loginPage.form(data.provider)
+            loginPage.submit()
+            cy.wait(3000)
 
         })
 
@@ -79,25 +84,45 @@ Cypress.Commands.add('setProviderId', function (providerEmail) {
         expect(response.status).to.eq(200)
         const providerList = response.body
 
-        providerList.forEach( function(provider) {
-                 if (provider.email === providerEmail){
-                    Cypress.env('providerId',provider.id)
-                 }
+        providerList.forEach(function (provider) {
+            if (provider.email === providerEmail) {
+                Cypress.env('providerId', provider.id)
+            }
         });
     })
 
 
 })
 
-Cypress.Commands.add('createAppointment',function(){
+Cypress.Commands.add('createAppointment', function () {
 
-           let now = new Date()
-           now.setDate(now.getDate() + 1)
+    let now = new Date()
+    now.setDate(now.getDate() + 1)
 
-           const day = moment(now).format('YYYY-MM-DD 14:00:00')
+    const date = moment(now).format('YYYY-MM-DD 14:00:00')
 
-           cy.log(day)
+    const payload = {
+        provider_id: Cypress.env('providerId'),
+        date: date
 
+    }
+
+    cy.request({
+
+        method: 'POST',
+        url: 'http://localhost:3333/appointments',
+        body: payload,
+        headers: { 
+            authorization: 'Bearer ' + Cypress.env('apiToken')
+         }
+
+
+    }).then(function (response) {
+
+        expect(response.status).to.eq(200)
+
+
+    })
 
 
 
