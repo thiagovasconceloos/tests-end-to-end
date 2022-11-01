@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 describe('dashboard', function () {
 
     context(' quando o cliente faz um agendamento no app mobile', function () {
@@ -33,7 +35,7 @@ describe('dashboard', function () {
         it('o mesmo deve ser exibido no dashboard', function () {
 
 
-            //console.log(data)
+            cy.createAppointment()
 
         })
 
@@ -87,7 +89,22 @@ Cypress.Commands.add('setProviderId', function (providerEmail) {
 
 })
 
+Cypress.Commands.add('createAppointment',function(){
 
+           let now = new Date()
+           now.setDate(now.getDate() + 1)
+
+           const day = moment(now).format('YYYY-MM-DD 14:00:00')
+
+           cy.log(day)
+
+
+
+
+
+
+
+})
 
 
 
