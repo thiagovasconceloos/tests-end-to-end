@@ -1,7 +1,7 @@
 {
 
-  "baseUrl" : "http://localhost:3000/",
-  "apiServer": "https://samuraibs-api-papito.herokuapp.com"
+  "baseUrl" : "http://localhost:3000",
+  "apiServer": "http://localhost:3333"
 
 
 

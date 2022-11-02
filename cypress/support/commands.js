@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { apiServer } from '../../cypress.json'
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -32,12 +33,12 @@ Cypress.Commands.add('postUser', (user) => {
             console.log(result)
         })
 
-    cy.request(
+    cy.request({
 
-        'POST',
-        'http://localhost:3333/users',
-        user
-    ).then((res) => {
+        method: 'POST',
+        url: apiServer + '/users',
+        body: user
+    }).then((res) => {
 
         expect(res.status).to.eq(200)
 
@@ -54,12 +55,12 @@ Cypress.Commands.add('recoveryPass', function (email) {
 
 
 
-    cy.request(
+    cy.request({
 
-        'POST',
-        'http://localhost:3333/password/forgot',
-        { email: email }
-    ).then(function (response) {
+        method: 'POST',
+        url: apiServer + '/password/forgot',
+        body: { email: email }
+    }).then(function (response) {
 
         expect(response.status).to.eq(204)
 
@@ -87,7 +88,7 @@ Cypress.Commands.add('setProviderId', function (providerEmail) {
     cy.request({
 
         method: 'GET',
-        url: 'http://localhost:3333/providers',
+        url: apiServer + '/providers',
         headers: {
 
             authorization: 'Bearer ' + Cypress.env('apiToken')
@@ -115,7 +116,7 @@ Cypress.Commands.add('createAppointment', function (hour) {
     now.setDate(now.getDate() + 1)
 
     Cypress.env('appointmentDay', now.getDate())
-    const date = moment(now).format('YYYY-MM-DD ' + hour + ':00')
+    const date = moment(now).format(`YYYY-MM-DD ${hour}:00`)
 
     const payload = {
         provider_id: Cypress.env('providerId'),
@@ -126,7 +127,7 @@ Cypress.Commands.add('createAppointment', function (hour) {
     cy.request({
 
         method: 'POST',
-        url: 'http://localhost:3333/appointments',
+        url: apiServer + '/appointments',
         body: payload,
         headers: {
             authorization: 'Bearer ' + Cypress.env('apiToken')
@@ -163,7 +164,7 @@ Cypress.Commands.add('apiLogin', function (user) {
     cy.request({
 
         method: 'POST',
-        url: 'http://localhost:3333/sessions',
+        url: apiServer + '/sessions',
         body: payload
 
 
