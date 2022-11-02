@@ -1,5 +1,7 @@
 import moment from 'moment';
 import { apiServer } from '../../cypress.json'
+import loginPage from './pages/login'
+import dashPage from './pages/dash'
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -25,6 +27,21 @@ import { apiServer } from '../../cypress.json'
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+//App Actions
+Cypress.Commands.add('uiLogin',function(user){
+
+    loginPage.go()
+    loginPage.form(user)
+    loginPage.submit()
+    dashPage.header.userLoggedIn(user.name)
+
+
+
+})
+
+
+
 
 Cypress.Commands.add('postUser', (user) => {
 
@@ -116,6 +133,7 @@ Cypress.Commands.add('createAppointment', function (hour) {
     now.setDate(now.getDate() + 1)
 
     Cypress.env('appointmentDay', now.getDate())
+
     const date = moment(now).format(`YYYY-MM-DD ${hour}:00`)
 
     const payload = {

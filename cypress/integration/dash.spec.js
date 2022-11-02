@@ -23,12 +23,9 @@ describe('dashboard', function () {
 
         it('o mesmo deve ser exibido no dashboard', function () {
 
-
-            loginPage.go()
-            loginPage.form(provider)
-            loginPage.submit()
-            dashPage.calendarShouldBeVisible()
             const day = Cypress.env('appointmentDay')
+            cy.uiLogin(provider)
+            dashPage.calendarShouldBeVisible()
             dashPage.selectDay(day)
             dashPage.appointmentShouldBe(customer, appointment.Hour)
 
