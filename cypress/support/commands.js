@@ -168,7 +168,7 @@ Cypress.Commands.add('createAppointment', function (hour) {
 
 
 
-Cypress.Commands.add('apiLogin', function (user) {
+Cypress.Commands.add('apiLogin', function (user,setLocalStorage = false) {
 
 
     const payload = {
@@ -190,13 +190,23 @@ Cypress.Commands.add('apiLogin', function (user) {
 
         expect(response.status).to.eq(200)
         Cypress.env('apiToken', response.body.token)
+      
+        if(setLocalStorage) {
+      
+        const { token,user } = response.body
 
 
+       window.localStorage.setItem('@Samurai:token',token)
+       window.localStorage.setItem('@Samurai:user',JSON.stringify(user)) }
+ 
     })
+     
 
+    if(setLocalStorage) {
 
-
-
+         cy.visit('/dashboard')
+    }
+            
 
 
 
